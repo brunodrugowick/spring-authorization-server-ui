@@ -8,10 +8,52 @@
 </head>
 <body>
 
-<!--<div th:replace="fragments/header :: header (${username}, ${logged})"></div>-->
-<div th:replace="fragments/header"></div>
+<div th:replace="fragments/header :: header (${username}, ${logged})"></div>
+
+<br>
+<div class="container-fluid">
+    <a class="btn btn-primary"
+       style="white-space: nowrap"
+       href="/users/new">New User</a>
+</div>
+<br>
+<div class="container-fluid">
+
+    <table class="table table-striped">
+        <thead>
+        <tr class="text-left">
+            <th scope="col">Email</th>
+            <th scope="col">Roles</th>
+            <th scope="col" title="Informs if the user is enabled.">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-left" th:each="user : ${users}">
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.roles}"></td>
+            <td>
+                <span th:if="${user.isEnabled()}">Enabled</span>
+                <span th:unless="${user.isEnabled()}">Disabled</span>
+            </td>
+            <td>
+                <a class="btn btn-primary"
+                   style="white-space: nowrap"
+                   th:href="'/users/' + ${user.getId()}"
+                   th:text="Edit"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container-fluid" id="footer">
+    <br><hr><br>
+</div>
 
 <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script src="/webjars/popper.js/1.14.3/popper.min.js"></script>
 <script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="/webjars/bootstrap-table/1.16.0/bootstrap-table.min.js"></script>
 </body>
 </html>
