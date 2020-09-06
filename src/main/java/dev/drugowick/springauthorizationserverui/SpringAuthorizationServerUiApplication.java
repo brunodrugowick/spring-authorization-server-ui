@@ -6,8 +6,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 @SpringBootApplication
-@EnableResourceServer
-@EnableAuthorizationServer
 public class SpringAuthorizationServerUiApplication {
 
     public static void main(String[] args) {

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href='/webjars/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
+
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="header (username, logged)">
+    <a class="navbar-brand" href="/">Home</a>
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+<!--                <a class="nav-link" href="/users">Users</a>-->
+            </li>
+        </ul>
+<!--        <span class="text-light" th:text="'Olá, ' + ${username}">-->
+<!--            Olá, Usuário-->
+<!--        </span>-->
+<!--        <div class="text-light">-->
+<!--            <form th:if="${logged}" action="/logout"-->
+<!--                  method="post">-->
+<!--                <input class="btn btn-link"-->
+<!--                       type="submit"-->
+<!--                       value="Sair" />-->
+<!--                <input type="hidden"-->
+<!--                       th:name="${_csrf.parameterName}"-->
+<!--                       th:value="${_csrf.token}"/>-->
+<!--            </form>-->
+<!--            <div class="container">-->
+<!--                <a th:unless="${logged}" class="btn-link" href="/login">Entrar</a>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+</nav>
+
+<script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
