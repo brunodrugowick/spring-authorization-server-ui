@@ -3,25 +3,27 @@ package dev.drugowick.springauthorizationserverui.domain.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Entity(name = "user_table")
+@Entity(name = "client_table")
 @Data
-public class User {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false, unique = true)
-    @Email
     @NotBlank
-    private String email;
+    private String clientId;
 
     @NotBlank
-    private String password;
+    private String clientSecret;
 
-    private String roles;
-    private boolean enabled = true;
+    @NotBlank
+    private String grantTypes;
+
+    @NotBlank
+    private String scopes;
+
 }

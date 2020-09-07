@@ -26,11 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.anonymous().disable()
-//                .requestMatcher(request -> {
-//                    var uri = request.getRequestURI();
-//                    return (uri.startsWith("/home"));
-//                })
-        .authorizeRequests()
+            .authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/**").authenticated()
                 .and().formLogin();

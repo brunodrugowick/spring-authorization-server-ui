@@ -4,14 +4,18 @@ This is a basic, very basic, Authorization Server with a UI. This exists because
 
 # TODO
 
-- [ ] Make it possible to create and edit clients.
+- [X] Make it possible to create and edit clients.
+- [ ] Ability to view and revoke tokens of a client.
+- [ ] Ability to remove entities.
 - [ ] Proper passwords (it is `password` for everybody).
-- [ ] Better roles editing.
+- [ ] Add other grant types (current domain supports enough for the `password` grant type).
+- [ ] Create a proper service layer.
+- [ ] Better roles, scopes and grant types editing (currently, a csv list).
 - [ ] ...
 
 # Info
 
-Available users when started (`import.sql`):
+Available users when started (`data.sql`):
 
 ```sql
 insert into user_table (email, password, roles, enabled) values ('user@email.com', 'password', 'USER', true);
