@@ -1,5 +1,3 @@
-![Maven Package](https://github.com/brunodrugowick/spring-authorization-server-ui/workflows/Maven%20Package/badge.svg)
-
 # Spring Authorization Server UI
 
 This is a basic, very basic, Authorization Server with a UI. This exists because I have to create users with different roles and restarting the Authorization Server was boring.
