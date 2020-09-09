@@ -15,21 +15,18 @@ This is a basic, very basic, Authorization Server with a UI. This exists because
 
 # Info
 
-Available users when started (`data.sql`):
+Available users after first startup (`data.sql`):
 
 ```sql
 insert into user_table (email, password, roles, enabled) values ('user@email.com', 'password', 'USER', true);
 insert into user_table (email, password, roles, enabled) values ('admin@email.com', 'password', 'USER,ADMIN', false);
 ```
 
-Available client(s) (`AuthorizationServerConfig.java`) - not possible to edit in runtime yet:
+Available clients after first startup (`data.sql`):
 
-```java
-clients.inMemory()
-    .withClient("client")
-    .secret("password")
-    .authorizedGrantTypes("refresh_token", "password", "client_credentials")
-    .scopes("web");
+```sql
+insert into client_table (client_id, client_secret, grant_types, scopes) values ('client', 'password', 'refresh_token, password, client_credentials', 'web, arrobas, saladas');
+insert into client_table (client_id, client_secret, grant_types, scopes) values ('client2', 'password', 'password', 'web');
 ```
 
 To connect from your Resource Server (if Spring-based) you may need something like this:
@@ -41,4 +38,9 @@ security.oauth2.client.grant-type=password
 security.oauth2.resource.user-info-uri=http://localhost:8088/oauth/user
 ```
 
-You can use the `insomnia_requests-auth_server_ui.json` file to get a token and user info via API.
+The most important endpoints are: 
+
+- `/oauth/token` to get a token via a POST request with username and password as well as clientId as clientPassword.
+- `/oauth/user` to retrieve user info (by sending an Authorization HTTP header with `Bearer <token>`)
+
+You can use the `insomnia_requests-auth_server_ui.json` file (import into Insomnia) to test them and other endpoints.
