@@ -62,7 +62,7 @@
         <thead>
         <tr class="text-left">
             <th scope="col">Client ID</th>
-            <th scope="col">Client Secret</th>
+<!--            <th scope="col">Client Secret</th>-->
             <th scope="col" title="A comma-separated list of grants.">Grant Types</th>
             <th scope="col" title="A comma-separated list of scopes.">Scopes</th>
             <th scope="col">Actions</th>
@@ -71,7 +71,7 @@
         <tbody>
         <tr class="text-left" th:each="client : ${clients}">
             <td th:text="${client.clientId}"></td>
-            <td th:text="${client.clientSecret}"></td>
+<!--            <td th:text="${client.clientSecret}"></td>-->
             <td th:text="${client.grantTypes}"></td>
             <td th:text="${client.scopes}"></td>
             <td>

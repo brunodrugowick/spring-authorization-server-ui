@@ -5,9 +5,10 @@ This is a basic, very basic, Authorization Server with a UI. This exists because
 # TODO
 
 - [X] Make it possible to create and edit clients.
+- [X] ~~Proper passwords (it is `password` for everybody)~~ Users can change their passwords.
+- [ ] Make it possible to edit clients' passwords (it is `password` for all of them).
 - [ ] Ability to view and revoke tokens of a client.
 - [ ] Ability to remove entities.
-- [ ] Proper passwords (it is `password` for everybody).
 - [ ] Add other grant types (current domain supports enough for the `password` grant type).
 - [ ] Create a proper service layer.
 - [ ] Better roles, scopes and grant types editing (currently, a csv list).
@@ -15,19 +16,15 @@ This is a basic, very basic, Authorization Server with a UI. This exists because
 
 # Info
 
-Available users after first startup (`data.sql`):
+Available users after first startup (`BootstrapData.java`):
 
-```sql
-insert into user_table (email, password, roles, enabled) values ('user@email.com', 'password', 'USER', true);
-insert into user_table (email, password, roles, enabled) values ('admin@email.com', 'password', 'USER,ADMIN', false);
-```
+- name: `user@email.com`; password: `password`, roles: `USER`
+- name: `admin@email.com`; password: `password`; roles: `USER, ADMIN`
 
-Available clients after first startup (`data.sql`):
+Available clients after first startup (`BootstrapData.java`):
 
-```sql
-insert into client_table (client_id, client_secret, grant_types, scopes) values ('client', 'password', 'refresh_token, password, client_credentials', 'web, arrobas, saladas');
-insert into client_table (client_id, client_secret, grant_types, scopes) values ('client2', 'password', 'password', 'web');
-```
+- client_id: `client`; client_secret: `password`; grant_types: `refresh_token, password, client_credentials`; scopes: `web, arrobas, saladas`
+- client_id: `client2`; client_secret: `password`; grant_types: `password`; scopes: `web`
 
 To connect from your Resource Server (if Spring-based) you may need something like this:
 

@@ -4,11 +4,11 @@ import dev.drugowick.springauthorizationserverui.domain.entity.Client;
 import dev.drugowick.springauthorizationserverui.domain.entity.User;
 import dev.drugowick.springauthorizationserverui.domain.repository.ClientRepository;
 import dev.drugowick.springauthorizationserverui.domain.repository.UserRepository;
-import dev.drugowick.springauthorizationserverui.domain.service.MyClientDetailsService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +30,8 @@ public class PageController extends BasePageController {
 
     private final UserRepository userRepository;
     private final ClientRepository clientRepository;
-    private final MyClientDetailsService clientDetailsService;
+    private final PasswordEncoder passwordEncoder;
+
 
     @RequestMapping(path = "/")
     public String index(Model model) {
@@ -106,7 +107,7 @@ public class PageController extends BasePageController {
     public String editClient(@PathVariable Long id, Client client) {
         Optional<Client> optionalSavedClient = clientRepository.findById(id);
         optionalSavedClient.ifPresent(savedClient -> {
-            savedClient.setClientSecret(client.getClientSecret());
+//            savedClient.setClientSecret(client.getClientSecret());
             savedClient.setGrantTypes(client.getGrantTypes());
             savedClient.setScopes(client.getScopes());
             clientRepository.save(savedClient);
@@ -128,7 +129,8 @@ public class PageController extends BasePageController {
 
         Client client = new Client();
         client.setClientId(clientDto.getClientId());
-        client.setClientSecret(clientDto.getClientSecret());
+//        client.setClientSecret(passwordEncoder.encode(clientDto.getClientSecret()));
+        client.setClientSecret(passwordEncoder.encode("password"));
         client.setGrantTypes(clientDto.getGrantTypes());
         client.setScopes(clientDto.getScopes());
 
@@ -141,7 +143,7 @@ public class PageController extends BasePageController {
     private class ClientDto {
         private Long id;
         @NotBlank private String clientId;
-        @NotBlank private String clientSecret;
+        private String clientSecret;
         @NotBlank private String grantTypes;
         @NotBlank private String scopes;
     }
