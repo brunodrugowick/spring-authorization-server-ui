@@ -2,7 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link href='webjars/bootstrap/4.4.1/css/bootstrap.min.css' rel='stylesheet'>
-
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+    <script src="/websocket.js"></script>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
@@ -83,6 +86,34 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+<!-- //////////////////////////// Log ///////////////////////////// -->
+<br>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div id="log" class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection to log:</label>
+                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <tbody id="logs">
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <div class="container-fluid" id="footer">

@@ -1,5 +1,6 @@
 package dev.drugowick.springauthorizationserverui.web.api;
 
+import dev.drugowick.springauthorizationserverui.infrastructure.UserLoggerHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -10,10 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
+
+    private final UserLoggerHelper userLogger;
 
     @GetMapping("/oauth/user")
     public Map<String, Object> user (OAuth2Authentication user) {
+        userLogger.log("Getting user info");
         Map<String, Object> userInfo = new HashMap<>();
         userInfo.put("user", user.getUserAuthentication().getPrincipal());
         userInfo.put("authorities",
