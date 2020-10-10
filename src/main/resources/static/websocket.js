@@ -34,7 +34,22 @@ function disconnect() {
 }
 
 function showLogMessage(message) {
-    $("#logs").append("<tr><td>" + message + "</td></tr>");
+    const logHtmlElement = document.getElementById("logs");
+
+    logHtmlElement.value += createUserFriendlyLogMessage(message)
+    logHtmlElement.scrollTop = logHtmlElement.scrollHeight;
+}
+
+function createUserFriendlyLogMessage(message) {
+    const jsonMessage = JSON.parse(message);
+
+    const date = new Date(jsonMessage.dateTime);
+    const username = jsonMessage.username;
+    const logMessage = jsonMessage.message;
+
+    return date.toLocaleString()
+        + " [" + username + "]"
+        + ": " + logMessage + "\n";
 }
 
 $(function () {
