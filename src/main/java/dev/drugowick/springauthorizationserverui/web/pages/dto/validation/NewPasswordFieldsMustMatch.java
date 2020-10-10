@@ -1,4 +1,4 @@
-package dev.drugowick.springauthorizationserverui.web.dto.validation;
+package dev.drugowick.springauthorizationserverui.web.pages.dto.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
