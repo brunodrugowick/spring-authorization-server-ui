@@ -1,6 +1,6 @@
-package dev.drugowick.springauthorizationserverui.web.dto;
+package dev.drugowick.springauthorizationserverui.web.pages.dto;
 
-import dev.drugowick.springauthorizationserverui.web.dto.validation.NewPasswordFieldsMustMatch;
+import dev.drugowick.springauthorizationserverui.web.pages.dto.validation.NewPasswordFieldsMustMatch;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

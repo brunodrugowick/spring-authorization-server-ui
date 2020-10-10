@@ -1,7 +1,7 @@
 package dev.drugowick.springauthorizationserverui.web.pages;
 
 import dev.drugowick.springauthorizationserverui.domain.repository.UserRepository;
-import dev.drugowick.springauthorizationserverui.web.dto.PasswordChange;
+import dev.drugowick.springauthorizationserverui.web.pages.dto.PasswordChange;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
