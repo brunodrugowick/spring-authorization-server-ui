@@ -1,9 +1,7 @@
 package dev.drugowick.springauthorizationserverui.web.pages;
 
 import dev.drugowick.springauthorizationserverui.domain.entity.Client;
-import dev.drugowick.springauthorizationserverui.domain.entity.User;
 import dev.drugowick.springauthorizationserverui.domain.repository.ClientRepository;
-import dev.drugowick.springauthorizationserverui.domain.repository.UserRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -18,82 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-public class PageController extends BasePageController {
+public class ClientsPageController extends BasePageController {
 
-    // TODO Separate into Users and Clients controllers
-
-    private final UserRepository userRepository;
     private final ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
-
-
-    @RequestMapping(path = "/")
-    public String index(Model model) {
-
-        model.addAttribute("users", userRepository.findAll());
-        model.addAttribute("clients", clientRepository.findAll());
-
-        return "index";
-    }
-
-    @RequestMapping(path = "/users/{id}")
-    public String getUser(Model model, @PathVariable Long id) throws Exception {
-        model.addAttribute("user", userRepository.findById(id).orElseThrow(
-                () -> new Exception("Could not find user " + id)));
-
-        return "user-form";
-    }
-
-    @PostMapping(path = "/users/{id}")
-    public String editUser(@PathVariable Long id, User user) {
-        Optional<User> optionalSavedUser = userRepository.findById(id);
-        optionalSavedUser.ifPresent(savedUser -> {
-            savedUser.setRoles(user.getRoles());
-            savedUser.setEnabled(user.isEnabled());
-            userRepository.save(savedUser);
-        });
-
-        return "redirect:/";
-    }
-
-    @RequestMapping(path = "/users/new")
-    public String newUser(Model model) {
-        model.addAttribute("user", new UserDto());
-
-        return "user-form";
-    }
-
-    @PostMapping(path = "/users/new")
-    public String saveNewUser(@ModelAttribute("user") @Valid PageController.UserDto userDto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) return "user-form";
-
-        User user = new User();
-        user.setEnabled(userDto.isEnabled());
-        user.setRoles(userDto.getRoles());
-        user.setEmail(userDto.getEmail());
-        user.setPassword("password");
-
-        userRepository.save(user);
-
-        return "redirect:/";
-    }
-
-    @Setter @Getter @NoArgsConstructor
-    private class UserDto {
-        private Long id;
-        @Email @NotBlank private String email;
-        @NotBlank private String roles;
-        private boolean enabled;
-    }
-
-
-    ////////////////////////////// CLIENTS ////////////////////////////////
 
     @RequestMapping(path = "/clients/{id}")
     public String getClient(Model model, @PathVariable Long id) throws Exception {
@@ -116,6 +47,12 @@ public class PageController extends BasePageController {
         return "redirect:/";
     }
 
+    @PostMapping(path = "/clients/{id}/delete")
+    public String deleteUser(@PathVariable Long id) {
+        clientRepository.deleteById(id);
+        return "redirect:/";
+    }
+
     @RequestMapping(path = "/clients/new")
     public String newClient(Model model) {
         model.addAttribute("client", new ClientDto());
@@ -124,7 +61,7 @@ public class PageController extends BasePageController {
     }
 
     @PostMapping(path = "/clients/new")
-    public String saveNewClient(@ModelAttribute("client") @Valid PageController.ClientDto clientDto, BindingResult bindingResult) {
+    public String saveNewClient(@ModelAttribute("client") @Valid ClientsPageController.ClientDto clientDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "client-form";
 
         Client client = new Client();
@@ -139,14 +76,16 @@ public class PageController extends BasePageController {
         return "redirect:/";
     }
 
-    @Setter @Getter @NoArgsConstructor
+    @Setter
+    @Getter
+    @NoArgsConstructor
     private class ClientDto {
         private Long id;
-        @NotBlank private String clientId;
+        @NotBlank
+        private String clientId;
         private String clientSecret;
         @NotBlank private String grantTypes;
         @NotBlank private String scopes;
     }
-
 
 }
