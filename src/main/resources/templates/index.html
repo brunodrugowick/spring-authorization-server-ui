@@ -94,6 +94,10 @@
                    style="white-space: nowrap"
                    th:href="'/clients/' + ${client.id}"
                    th:text="Edit"></a>
+                <a class="btn btn-secondary"
+                   style="white-space: nowrap"
+                   th:href="'/clients/' + ${client.id} + '/secret'"
+                   th:text="'Change Client Secret'"></a>
             </td>
         </tr>
         </tbody>

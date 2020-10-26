@@ -6,7 +6,7 @@ This is a basic, very basic, Authorization Server with a UI. This exists because
 
 - [X] Make it possible to create and edit clients.
 - [X] ~~Proper passwords (it is `password` for everybody)~~ Users can change their passwords.
-- [ ] Make it possible to edit clients' passwords (it is `password` for all of them).
+- [ ] ~~Make it possible to edit clients' passwords (it is `password` for all of them).~~ Well, should I provide an option to change client's password? Not sure. I did on `feature_changeClientPassword` but I'm not sure it should be done. Won't merge.
 - [ ] Ability to view and revoke tokens of a client.
 - [X] Ability to remove entities.
 - [ ] Add other grant types (current domain supports enough for the `password` grant type).

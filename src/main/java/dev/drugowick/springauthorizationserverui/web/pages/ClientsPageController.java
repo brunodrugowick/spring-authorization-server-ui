@@ -38,7 +38,6 @@ public class ClientsPageController extends BasePageController {
     public String editClient(@PathVariable Long id, Client client) {
         Optional<Client> optionalSavedClient = clientRepository.findById(id);
         optionalSavedClient.ifPresent(savedClient -> {
-//            savedClient.setClientSecret(client.getClientSecret());
             savedClient.setGrantTypes(client.getGrantTypes());
             savedClient.setScopes(client.getScopes());
             clientRepository.save(savedClient);

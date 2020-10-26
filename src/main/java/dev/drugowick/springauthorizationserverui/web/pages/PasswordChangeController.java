@@ -1,26 +1,27 @@
 package dev.drugowick.springauthorizationserverui.web.pages;
 
+import dev.drugowick.springauthorizationserverui.domain.repository.ClientRepository;
 import dev.drugowick.springauthorizationserverui.domain.repository.UserRepository;
 import dev.drugowick.springauthorizationserverui.web.pages.dto.PasswordChange;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/profile")
+@RequestMapping
 @RequiredArgsConstructor
+@Slf4j
 public class PasswordChangeController extends BasePageController {
 
     private final UserRepository userRepository;
+    private final ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
 
     @ModelAttribute("passwordChange")
@@ -28,12 +29,19 @@ public class PasswordChangeController extends BasePageController {
         return new PasswordChange();
     }
 
-    @GetMapping("/password")
-    public String passwordChange() {
-        return "password-change";
+    @GetMapping("/profile/password")
+    public String passwordChange(Principal principal) {
+        log.info("User {} is trying to change its password", principal.getName());
+        return "password-change-user";
     }
 
-    @PostMapping("/password")
+    @GetMapping("/clients/{id}/secret")
+    public String passwordChange(@PathVariable Long id) {
+        log.info("Requested password change for client {}", id);
+        return "password-change-client";
+    }
+
+    @PostMapping("/profile/password")
     public String passwordChangePost(@ModelAttribute("passwordChange") @Valid PasswordChange passwordChange,
                                      BindingResult bindingResult,
                                      Principal principal) {
@@ -43,10 +51,31 @@ public class PasswordChangeController extends BasePageController {
             if (!passwordEncoder.matches(passwordChange.getCurrentPassword(), user.getPassword()))
                 bindingResult.addError(new ObjectError("currentPassword", "Current password doesn't match"));
             if (bindingResult.hasErrors())
-                return "password-change";
+                return "password-change-user";
             String newPassword = passwordChange.getNewPassword();
             user.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(user);
+            log.info("User {} changed its password", user.getEmail());
+        }
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/clients/{id}/secret")
+    public String clientPasswordChangePost(@PathVariable Long id,
+                                           @ModelAttribute("passwordChange") @Valid PasswordChange passwordChange,
+                                           BindingResult bindingResult,
+                                           Principal principal) {
+        var clientOptional= clientRepository.findById(id);
+        if (clientOptional.isPresent()) {
+            var client= clientOptional.get();
+            if (!passwordEncoder.matches(passwordChange.getCurrentPassword(), client.getClientSecret()))
+                bindingResult.addError(new ObjectError("currentPassword", "Current password doesn't match"));
+            if (bindingResult.hasErrors())
+                return "password-change-client";
+            String newPassword = passwordChange.getNewPassword();
+            client.setClientSecret(passwordEncoder.encode(newPassword));
+            clientRepository.save(client);
         }
 
         return "redirect:/";
