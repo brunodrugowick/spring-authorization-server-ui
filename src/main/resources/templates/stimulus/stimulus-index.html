@@ -7,62 +7,28 @@
         (() => {
             const application = Stimulus.Application.start()
 
-            application.register("header", class extends Stimulus.Controller {
+            application.register("loader", class extends Stimulus.Controller {
                 static get targets() { return [ "name" ] }
-                // Don't know how to get values...
-                //static get values() { return { url: String } }
+                static values = { url: String }
 
                 connect() {
                     this.load();
                 }
 
                 load() {
-                    fetch('/stimulus/header')
+                    fetch(this.urlValue)
                         .then(response => response.text())
                         .then(html => this.element.innerHTML = html)
                 }
             })
-
-            application.register("users", class extends Stimulus.Controller {
-                static get targets() { return [ "name" ] }
-                // Don't know how to get values...
-                //static get values() { return { url: String } }
-
-                connect() {
-                    this.load();
-                }
-
-                load() {
-                    fetch('/stimulus/users')
-                        .then(response => response.text())
-                        .then(html => this.element.innerHTML = html)
-                }
-            })
-
-            application.register("clients", class extends Stimulus.Controller {
-                static get targets() { return [ "name" ] }
-                // Don't know how to get values...
-                //static get values() { return { url: String } }
-
-                connect() {
-                    this.load();
-                }
-
-                load() {
-                    fetch('/stimulus/clients')
-                        .then(response => response.text())
-                        .then(html => this.element.innerHTML = html)
-                }
-            })
-
         })()
     </script>
     <title>Home</title>
 </head>
 <body>
-<div data-controller="header" data-loader-url-value="/stimulus/header"></div>
-<div data-controller="users" data-loader-url-value="/stimulus/users"></div>
-<div data-controller="clients" data-loader-url-value="/stimulus/clients"></div>
+<div data-controller="loader" data-loader-url-value="/stimulus/header"></div>
+<div data-controller="loader" data-loader-url-value="/stimulus/users"></div>
+<div data-controller="loader" data-loader-url-value="/stimulus/clients"></div>
 
 </body>
 </html>
